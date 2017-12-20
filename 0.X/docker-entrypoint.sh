@@ -95,6 +95,13 @@ if [ "$1" = 'consul' ]; then
     set -- su-exec consul:consul "$@"
 fi
 
-set -- "$@" agent -server -bootstrap-expect=3 -retry-join "provider=aws tag_key=consul-ecs tag_value=consul" -client 0.0.0.0 -advertise $(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+set -- "$@" agent -server \
+        -data-dir="$CONSUL_DATA_DIR" \
+        -config-dir="$CONSUL_CONFIG_DIR" \
+        $CONSUL_BIND \
+        $CONSUL_CLIENT \
+	-bootstrap-expect=3 \
+	-retry-join "provider=aws tag_key=consul-ecs tag_value=consul" -client 0.0.0.0 \
+	-advertise $(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
 
 exec "$@"
