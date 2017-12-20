@@ -60,4 +60,8 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 # By default you'll get an insecure single-node development server that stores
 # everything in RAM, exposes a web UI and HTTP endpoints, and bootstraps itself.
 # Don't use this configuration for production.
-CMD ["agent", "-dev", "-client", "0.0.0.0"]
+#CMD ["agent", "-dev", "-client", "0.0.0.0"]
+
+#CMD ["agent", "-server", "-bootstrap-expect=3", "-retry-join", "\"provider=aws tag_key=consul-ecs tag_value=consul\"", "-client", "0.0.0.0", "-advertise", "$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"]
+
+#CMD ["agent", "-server", "-bootstrap-expect=3", "-retry-join", "\"provider=aws tag_key=consul-ecs tag_value=consul\"", "-client", "0.0.0.0"]
